@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        //here we use 3 condition
+        //x<first
+        //f<x && s<x;
+        //x>s
+        int fir= INT_MAX;
+        int sec= INT_MAX;
+        for(auto i :nums){
+            if(i < fir){
+                fir = i;
+            }
+            else if(fir < i && i < sec ){
+                 sec = i;
+            }
+            else if( i > sec){
+                return true;
+            }
+        }
+        return false;
+        
+        
+    }
+};
