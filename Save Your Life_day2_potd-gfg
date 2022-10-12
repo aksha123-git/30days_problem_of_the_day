@@ -1,0 +1,32 @@
+class Solution{
+public:
+      int get(char c,char x[], int b[],int n){
+          for(int i=0;i<n;i++){
+              if(x[i] == c)
+              return b[i];
+          }
+          return int(c);//used to get ascii value of particular variable
+      }
+      string maxSum(string w,char x[], int b[],int n){
+          // code here       
+          int cursum =0;
+          int maxi =0;
+          int start=0;
+          int end = 0;
+          int s = 0;
+          for(int i =0; i < w.size(); i++){
+              cursum += get(w[i],x,b,n);
+              if(cursum > maxi){
+                  maxi = cursum ;
+                  start = s;
+                  end = i;
+                  
+              }
+              if(cursum < 0){
+                  cursum = 0;
+                  s = i+1;
+              }
+          }
+          return w.substr(start, end-start+1);
+      }
+};
