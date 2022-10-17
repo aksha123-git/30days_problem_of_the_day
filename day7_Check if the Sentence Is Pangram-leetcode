@@ -1,0 +1,31 @@
+class Solution {
+public:
+    // first approach 
+   // tc = 0(n)
+    bool checkIfPangram(string sentence) {
+        map<char,int> vv;
+        for(int i=0; i<sentence.size(); i++){
+            vv[sentence[i]]++;
+        }
+        if(vv.size()==26){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    }
+};
+    
+   // 2nd approach
+   //tc = o(1)
+    bool checkIfPangram(string sentence) {
+        int tsb = 0;
+        for(auto x : sentence){
+            int ch = x-'a';
+            int bits = 1<<ch;
+            tsb = tsb | bits;
+        }
+        return tsb == (1<<26) -1;
+    }
+};
