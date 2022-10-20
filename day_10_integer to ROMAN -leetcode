@@ -1,0 +1,81 @@
+class Solution {
+public:
+    string intToRoman(int num) {
+        //here in case of 1000 100 10 1 we use while loop beacuse this are repeating in every example
+        //take one example 3792- MMMDCCXCII
+        //approach- 3792-3000(M)=792
+        //792 - 500(D) = 292
+        //292 -200(CC) = 92
+        //92 - 90(XC) = 2
+        // 2 - (II)
+       
+     string sol = "";
+     while(num>=1000)
+     {
+         sol+="M";
+         num-=1000;
+     }
+     if(num>=900)
+     {
+         sol+="CM";
+         num-=900;
+     }
+     if(num>=500)
+     {
+         sol+="D";
+         num-=500;
+     }
+     if(num>=400)
+     {
+         sol+="CD";
+         num-=400;
+     }
+     while(num>=100)
+     {
+      sol+="C";
+      num-=100;
+     }
+     if(num>=90)
+     {
+         sol+="XC";
+         num-=90;
+     }
+     if(num>=50)
+     {
+         sol+="L";
+         num-=50;
+     }
+     if(num>=40)
+     {
+         sol+="XL";
+         num-=40;
+     }
+     while(num>=10)
+     {
+         sol+="X";
+         num-=10;
+     }
+     if(num>=9)
+     {
+         sol+="IX";
+         num-=9;
+     }
+     if(num>=5)
+     {
+         sol+="V";
+         num-=5;
+     }
+     if(num>=4)
+     {
+         sol+="IV";
+         num-=4;
+     }
+     while(num>=1)
+     {
+         sol+="I";
+         num-=1;
+     }
+     return sol;
+    }
+};
+  
