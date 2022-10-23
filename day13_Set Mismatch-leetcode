@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        vector<int>res;
+        unordered_set<int> m;
+        int sum =0;
+        for(auto i: nums){
+            if(m.find(i) != m.end()){
+                res.push_back(i);
+            }
+            else{
+                m.insert(i);
+                sum = sum + i;
+            }
+            
+        }
+        int n = nums.size();
+        int nsum = (n*(n+1))/2;
+        res.push_back(nsum - sum);
+        
+    
+    return res;
+}
+};
