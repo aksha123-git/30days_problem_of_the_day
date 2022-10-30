@@ -1,0 +1,117 @@
+/*class Solution {
+public:
+    int countoverlaps(vector<vector<int>>& img1, vector<vector<int>>& img2 , int rowoffset , int coloffset) {
+         int n = img1.size();
+        int count =0;
+        for(int i =0; i <n ;i++){
+            for(int j =0; j< n; j++){
+               // A[i][j] = B[i+rowoffset][j+columnoffset];
+                if(i+rowoffset < 0 || i+rowoffset >= n || i+coloffset < 0 || i+coloffset >= n)
+                    continue;
+                if(img1[i][j] == 1 && img2[i+rowoffset][j+coloffset] == 1)
+                    count++;
+                
+                    
+                    
+                
+                
+            }
+        }
+        return count;
+        
+    }
+    
+    int largestOverlap(vector<vector<int>>& img1, vector<vector<int>>& img2) {
+        //columnoffset (-1,0,1)
+        //rowoffset(-1,   0,     1)
+        //           /     |       \
+        //   (-1,0,1)   (-1,0,1)    (-1,0,1)-> columnoffset
+        //A[i][j] = B[i+rowoffset][j+columnoffset]
+        //row =n
+        //col = n;
+        int n = img1.size();
+        int maxoverlapping = 0;
+        for(int rowoffset = -n+1; rowoffset < n; rowoffset++){
+            for(int coloffset = -n+1; coloffset < n; coloffset++){
+                int count = countoverlaps(img1, img2, rowoffset , coloffset);
+                maxoverlapping = max(maxoverlapping, count);
+                
+            }
+            
+        }
+        return maxoverlapping;
+        
+        
+    }
+};*/
+    
+    
+class Solution {
+public:
+    int countOverlaps(vector<vector<int>>& A, vector<vector<int>>& B, int rowOff, int colOff) {
+        int n = A.size();
+        int count = 0;
+        
+        /*
+            Uncomment these to see how the matrix is moving. For ease, take example : 
+            [[0,1],[0,0]]
+            [[0,0],[1,0]]
+            
+            cout << "\n----------------------------\n";
+            cout << "Checking for rowOff = " << rowOff << ", collOff = " << colOff << endl;
+        */
+        
+        for(int row = 0; row < n; row++) {
+            for(int col = 0; col < n; col++) {
+                if(row+rowOff < 0 || row+rowOff >= n || col+colOff < 0 || col+colOff >= n)
+                    continue;
+                
+                /*
+                    cout << "A[" << row << "][" << col << "] = " << A[row][col] << ", ";
+                    cout  << "B[" << row+rowOff << "][" << col+colOff << "] = " << B[row+rowOff][col+colOff] << endl;
+                */
+                
+                count += A[row][col]*B[row+rowOff][col+colOff];
+            }
+        }
+        
+        /*
+            cout << "\n----------------------------\n";
+        */
+        
+        return count;
+    }
+    int largestOverlap(vector<vector<int>>& A, vector<vector<int>>& B) {
+        int n = A.size();
+        
+        int maxOverlap = 0;
+        
+        /*
+            For ease take this example :
+            [[0,1],[0,0]]
+            [[0,0],[1,0]]
+            
+            So, we are basically having rowOffsets from (-n+1) to (n-1). Why ? Read all the comments to know
+            For example : n = 2
+            rowOff will have values -1, 0, 1
+            colOff will have values -1, 0, 1
+            
+            Based on this rowOff,colOff, we will move B over A starting from "bottom left"
+            1) rowOff  = -1, colOff = -1, means B is at bottom left overlapping with A[row][col] and B[row+rowOff][col+colOff]
+            i.e. A[row][col] = A[1][1]
+            i.e. B[row+rowOff][col+colOff] = B[0][0]
+            
+            2) For rowOff = -1 , we will have colOff -1, 0, 1 which means we are moving the window B towards right till we cross boundary
+            
+            Similarly we move ahead with rowOff  = 0, and then 1.....
+        */
+        
+        for(int rowOff = -n+1; rowOff<n; rowOff++) {
+            for(int collOff = -n+1; collOff<n; collOff++) {
+                maxOverlap = max(maxOverlap, countOverlaps(A, B, rowOff, collOff));
+            }
+        }
+        
+        return maxOverlap;
+    }
+};
