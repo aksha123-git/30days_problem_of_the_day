@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int longestPalindrome(vector<string>& words) {
+        map<string, int> m;
+        int length = 0;
+        int ans  =0;
+        bool flag = false;
+        for(auto word : words){
+            m[word]++;// calculate count of every string
+        }
+        for(auto i :m){
+            if(i.first[0] == i.first[1]){
+                if(i.second % 2 ==1){// check string is count is odd or even
+                    flag = true;
+                     length += (i.second-1);  
+                }
+                else{
+                    length += m[i.first];
+                    
+                }
+                m.erase(i.first); // erase that string which is already checked
+                
+            }
+            else{
+                string s = i.first;
+                reverse(s.begin(), s.end()); // check string palindrome is present or not
+                if(m.find(s) != m.end()){
+                    ans += min(m[s], i.second)*4;
+                }
+                m.erase(s);
+                m.erase(i.first);
+            }
+        }
+       if(flag)
+         {
+           return ans+length*2+2;// for odd letter  
+         }
+         return ans+length*2; // for even
+    }
+};
