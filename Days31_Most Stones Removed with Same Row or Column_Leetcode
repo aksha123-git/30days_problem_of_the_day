@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int n ;
+    vector<int> vis;
+    void dfs(int index,vector<vector<int>> &stones){
+        vis[index] = 1; //intially true means all visited;
+        for(int i =0; i< n ; i++){
+            if(vis[i])
+                continue;
+            if(stones[index][0] == stones[i][0] || stones[index][1] == stones[i][1]){
+                dfs(i,stones);
+            }
+        }
+        return;
+    }
+    int removeStones(vector<vector<int>>& stones) {
+        n = stones.size();
+        vis.resize(n,0);
+        int value =0;
+        for(int i =0; i< n ; i++){
+            if(vis[i])
+                continue;
+            value++;
+            dfs(i,stones);
+        }
+        return n - value;
+    }
+};
+//connecting pair
+//total stones - graph
+//[[0,0],[0,1],[1,0],[1,2],[2,1],[2,2]]
+//    |_____|_|                 |
+//          |___________________|
+//in this way me pair
+//ans = 6                                -                  1
+//     [0,1],[1,0],[1,2],[2,1],[2,2]                        [0,0]
+//[[0,0],[0,1],[1,0],[1,2],[2,1],[2,2],[3,4]]
+//ans = 7                         -    2
+// [0,1],[1,0],[1,2],[2,1],[2,2]        [[0,0],[3,4]]
